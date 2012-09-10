@@ -1,3 +1,14 @@
+Audio/
+Data/
+Graphics/
+System/
+Game.exe
+Game.ini
+Game.rvproj2
+Gemfile.lock
+
+*~
+
 *.gem
 *.rbc
 .bundle
