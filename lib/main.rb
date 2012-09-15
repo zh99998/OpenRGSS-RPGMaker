@@ -31,12 +31,12 @@ if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
   if $RGSS_VERSION == 1
     registry.open('Software\Enterbrain\RGSS\RTP') do |reg|
       [Game_Config['RTP1'], Game_Config['RTP2'], Game_Config['RTP3']].each do |rtp|
-        RGSS.load_path << reg[rtp]
+        (RGSS.load_path << reg[rtp]) rescue nil
       end
     end
   else
-    registry.open('Software\Enterbrain\RGSS\RTP' + $RGSS_VERSION.to_s) do |reg|
-      RGSS.load_path << Game_Config['RTP']
+    registry.open("Software\\Enterbrain\\RGSS#{$RGSS_VERSION}\\RTP") do |reg|
+      (RGSS.load_path << reg[Game_Config['RTP']]
     end
   end
 else
