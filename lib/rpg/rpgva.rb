@@ -1,3 +1,5 @@
+module RPG
+end
 require_relative 'rpgva/map'
 require_relative 'rpgva/map_encounter'
 require_relative 'rpgva/mapinfo'

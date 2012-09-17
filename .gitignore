@@ -7,6 +7,8 @@ Game.ini
 Game.rvproj2
 Gemfile.lock
 
+.idea/
+
 *~
 
 *.gem
