@@ -67,6 +67,7 @@ end
 
 #run scripts
 $RGSS_SCRIPTS = load_data $RGSS_CONFIG['Scripts'].gsub('\\', '/')
+begin
 if $RGSS_VERSION <= 2
   RGSS.init
   rgss_main { $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).force_encoding('UTF-8'), TOPLEVEL_BINDING, script[1], 0 } }
@@ -77,4 +78,13 @@ else
   #open("Data/#{script[1]}.rb", 'w') { |f| f.write Zlib::Inflate.inflate(script[2]) }
   #eval IO.read("Data/#{script[1]}.rb"), TOPLEVEL_BINDING, "Data/#{script[1]}.rb", 0
   #end
+end
+rescue SystemExit
+
+rescue Exception => exception
+  if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
+    msgbox(exception, exception.backtrace.join("\n"))
+  else
+    raise exception
+  end
 end
