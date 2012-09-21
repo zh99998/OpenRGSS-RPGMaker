@@ -55,12 +55,12 @@ if RUBY_PLATFORM['mingw'] or RUBY_PLATFORM['mswin']
   if $RGSS_VERSION == 1
     registry.open('Software\Enterbrain\RGSS\RTP') do |reg|
       [$RGSS_CONFIG['RTP1'], $RGSS_CONFIG['RTP2'], $RGSS_CONFIG['RTP3']].each do |rtp|
-        (RGSS.load_path << reg[rtp]) rescue nil
+        (RGSS.load_path << reg[rtp].force_encoding(Encoding.default_external).encode('UTF-8')) rescue nil
       end
     end
   else
     registry.open("Software\\Enterbrain\\RGSS#{$RGSS_VERSION}\\RTP") do |reg|
-      (RGSS.load_path << reg[$RGSS_CONFIG['RTP']]) rescue nil
+      (RGSS.load_path << reg[$RGSS_CONFIG['RTP']].force_encoding(Encoding.default_external).encode('UTF-8')) rescue nil
     end
   end
 end
@@ -69,7 +69,6 @@ end
 $RGSS_SCRIPTS = load_data $RGSS_CONFIG['Scripts'].gsub('\\', '/')
 begin
 if $RGSS_VERSION <= 2
-  RGSS.init
   rgss_main { $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).force_encoding('UTF-8'), TOPLEVEL_BINDING, script[1], 0 } }
 else
   $RGSS_SCRIPTS.each { |script| eval Zlib::Inflate.inflate(script[2]).force_encoding('UTF-8'), TOPLEVEL_BINDING, script[1], 0 }
